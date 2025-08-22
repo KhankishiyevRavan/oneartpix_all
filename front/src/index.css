@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+/* Conic sweep və halo üçün (lazımdırsa) */
+@property --sweep {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 90deg;
+}
+
+/* (İstəsən saxla) — dekorativ halqa üçün util-lar */
+.halo-ring {
+    padding: 5px;
+    filter: drop-shadow(0 6px 14px rgba(255, 216, 162, .35));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    transform: scale(0.85);
+    opacity: 0;
+}
+
+@keyframes halo-grow {
+    0% {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.04);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes halo-sweep {
+    from {
+        --sweep: 90deg;
+    }
+
+    to {
+        --sweep: 360deg;
+    }
+}
+
+.animate-halo {
+    animation: halo-grow 600ms ease-out forwards, halo-sweep 900ms ease-out forwards;
+}
+
+.halo-bg {
+    background:
+        conic-gradient(from 225deg at 28px 28px,
+            rgba(255, 216, 162, 0.95) 0deg,
+            rgba(255, 216, 162, 0.7) calc(var(--sweep) * 0.4),
+            rgba(115, 63, 3, 0) var(--sweep));
+}
+
+/* ====== L-şəkilli BORDER ANİMASİYASI (kənardan başlayır) ====== */
+:root {
+    --bw: 2px;
+    /* daha YAVAŞ */
+    --dur1: 2200ms;
+    /* 1-ci faza: üst+sol */
+    --dur2: 1800ms;
+    /* 2-ci faza: alt+sağ */
+    --delay2: 350ms;
+    /* fazalar arası fasilə */
+    --ease: cubic-bezier(.25, .75, .25, 1);
+    --border-color: #f59e0b;
+}
+
+
+/* Overlay konteyneri */
+.corner-frame {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    filter: drop-shadow(0 6px 14px rgba(255, 216, 162, .3));
+}
+
+.corner-frame::before,
+.corner-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+}
+
+/* Mərhələ 1: ÜST + SOL (L formasının böyüməsi) */
+.corner-frame::before {
+    background:
+        linear-gradient(var(--border-color) 0 0) 0 0 / var(--w, 16px) var(--bw) no-repeat,
+        /* üst */
+        linear-gradient(var(--border-color) 0 0) 0 0 / var(--bw) var(--h, 16px) no-repeat;
+    /* sol */
+    animation: growTL var(--dur1) var(--ease) forwards;
+}
+
+/* Mərhələ 2: ALT + SAĞ (tamamlama) */
+.corner-frame::after {
+    background:
+        linear-gradient(var(--border-color) 0 0) 0 100% / var(--w2, 0) var(--bw) no-repeat,
+        /* alt */
+        linear-gradient(var(--border-color) 0 0) 100% 0 / var(--bw) var(--h2, 0) no-repeat;
+    /* sağ */
+    animation: growBR var(--dur2) var(--ease) var(--delay2) forwards;
+}
+
+@keyframes growTL {
+    0% {
+        --w: 16px;
+        --h: 16px;
+    }
+
+    /* kiçik L */
+    60%,
+    100% {
+        --w: 100%;
+        --h: 100%;
+    }
+}
+
+@keyframes growBR {
+    0% {
+        --w2: 0%;
+        --h2: 0%;
+    }
+
+    100% {
+        --w2: 100%;
+        --h2: 100%;
+    }
+}
+
+/* Hərəkətə həssas istifadəçilər üçün — animasiyasız tam border göstər */
+@media (prefers-reduced-motion: reduce) {
+
+    .corner-frame::before,
+    .corner-frame::after {
+        animation: none;
+        background:
+            linear-gradient(var(--border-color) 0 0) 0 0 / 100% var(--bw) no-repeat,
+            linear-gradient(var(--border-color) 0 0) 0 0 / var(--bw) 100% no-repeat,
+            linear-gradient(var(--border-color) 0 0) 0 100% / 100% var(--bw) no-repeat,
+            linear-gradient(var(--border-color) 0 0) 100% 0 / var(--bw) 100% no-repeat;
+    }
+}
+
+:root {
+    --bg: #121a22;
+    /* tünd fon */
+    --gold: #e6c28b;
+    /* qızılı mətn/ikon */
+    --gold-70: #e6c28bb3;
+    /* hover üçün */
+    --link-size: 14px;
+}
+
+* {
+    box-sizing: border-box
+}
+
+html, body, #root {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--gold);
+    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+
+@layer components {
+    .all-\[unset\] {
+        all: unset;
+    }
+}
+
+:root {
+    --variable-collection-color-YELLOW: rgba(255, 227, 13, 1);
+}
+
+:root {
+    --animate-spin: spin 1s linear infinite;
+}
+
+.animate-fade-in {
+    animation: fade-in 1s var(--animation-delay, 0s) ease forwards;
+}
+
+.animate-fade-up {
+    animation: fade-up 1s var(--animation-delay, 0s) ease forwards;
+}
+
+.animate-marquee {
+    animation: marquee var(--duration) infinite linear;
+}
+
+.animate-marquee-vertical {
+    animation: marquee-vertical var(--duration) linear infinite;
+}
+
+.animate-shimmer {
+    animation: shimmer 8s infinite;
+}
+
+.animate-spin {
+    animation: var(--animate-spin);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes image-glow {
+    0% {
+        opacity: 0;
+        animation-timing-function: cubic-bezier(0.74, 0.25, 0.76, 1);
+    }
+
+    10% {
+        opacity: 0.7;
+        animation-timing-function: cubic-bezier(0.12, 0.01, 0.08, 0.99);
+    }
+
+    to {
+        opacity: 0.4;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fade-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes shimmer {
+
+    0%,
+    90%,
+    to {
+        background-position: calc(-100% - var(--shimmer-width)) 0;
+    }
+
+    30%,
+    60% {
+        background-position: calc(100% + var(--shimmer-width)) 0;
+    }
+}
+
+@keyframes marquee {
+    0% {
+        transform: translate(0);
+    }
+
+    to {
+        transform: translateX(calc(-100% - var(--gap)));
+    }
+}
+
+@keyframes marquee-vertical {
+    0% {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(calc(-100% - var(--gap)));
+    }
+}
