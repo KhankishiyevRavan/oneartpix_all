@@ -7,7 +7,6 @@ type Product = Parameters<typeof productService.list>[0] extends never
   ? never
   : Awaited<ReturnType<typeof productService.list>>["data"][number];
 
-type SendState = "idle" | "loading" | "success" | "error";
 
 export default function ProductsAdminPage() {
   const navigate = useNavigate();
@@ -83,17 +82,6 @@ export default function ProductsAdminPage() {
     }
   }
 
-  function openEdit(product: Product) {
-    setEditing(product);
-    setTitle(product.title);
-    setCategory(product.category);
-    setLocation(product.location);
-    setPrice(String(product.price));
-    setDescription(product.description || "");
-    setMainImageFile(null);
-    setImageFiles([]);
-    setEditOpen(true);
-  }
 
   function closeEdit() {
     setEditOpen(false);
