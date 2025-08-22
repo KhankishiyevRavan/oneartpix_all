@@ -61,7 +61,7 @@ const AppSidebar: React.FC = () => {
   const navItems: NavItem[] = [
     {
       icon: <PieChartIcon />,
-      name: "İdarə paneli",
+      name: "Dashboard",
       path: "/dashboard",
     },
 

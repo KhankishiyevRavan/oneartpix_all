@@ -36,7 +36,7 @@ const PageBreadcrumbSub: React.FC<BreadcrumbProps> = ({
               className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
               to="/"
             >
-              İdarə paneli
+             Dashboard
               <svg
                 className="stroke-current"
                 width="17"
