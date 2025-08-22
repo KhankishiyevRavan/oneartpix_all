@@ -10,7 +10,7 @@ export default defineConfig({
     allowedHosts: ["oneartpix.khankishiyevravan.info"],
     proxy: {
       "/api": {
-        target: "oneartpix.khankishiyevravan.info", // Backend URL
+        target: "https://oneartpix.khankishiyevravan.info", // Backend URL
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
