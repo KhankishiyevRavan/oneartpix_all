@@ -6,7 +6,8 @@ function uploadImage(req, res) {
 
   // Public static path: /uploads/<filename>
   // BASE_URL (env) lazımdır ki tam URL qaytarılsın
-  const base = process.env.BASE_URL || `http://localhost:${process.env.PORT || 5000}`;
+  const base =
+    process.env.BASE_URL || `https://https://oneartpix.khankishiyevravan.info/`;
   const url = `${base}/uploads/${encodeURIComponent(path.basename(file.path))}`;
 
   res.json({ url });

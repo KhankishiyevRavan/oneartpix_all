@@ -6,6 +6,7 @@ async function createProductMultipart(req, res) {
     // Multer file
     const file = req.file; // field name: "image"
     const { title, category, location, price, description } = req.body;
+    console.log(req.body);
 
     if (!title || !category || !location || price === undefined) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -19,7 +20,8 @@ async function createProductMultipart(req, res) {
     let imageUrl = req.body.imageUrl && String(req.body.imageUrl).trim();
     if (file) {
       const base =
-        process.env.BASE_URL || `https://https://oneartpix.khankishiyevravan.info/`;
+        process.env.BASE_URL ||
+        `https://https://oneartpix.khankishiyevravan.info/`;
       imageUrl = `${base}/uploads/${encodeURIComponent(
         path.basename(file.path)
       )}`;
