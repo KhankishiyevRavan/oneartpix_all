@@ -66,13 +66,13 @@ export default function ProductCreateForm() {
       images.forEach((f) => fd.append("images", f));
 
       // ✳️ Backend endpointini buradan dəyişə bilərsən
-      const res = await fetch("oneartpix.khankishiyevravan.info/api/products/form-data", {
+      const res = await fetch("https://oneartpix.khankishiyevravan.info/api/products/form-data", {
         method: "POST",
         body: fd,
       });
 
       if (!res.ok) {
-        const msg = await safeJsonMessage(res);
+        const msg = await safeJsonMessage(res); 
         throw new Error(msg || "Yükləmə zamanı xəta baş verdi.");
       }
 

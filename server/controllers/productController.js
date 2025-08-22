@@ -19,7 +19,7 @@ async function createProductMultipart(req, res) {
     let imageUrl = req.body.imageUrl && String(req.body.imageUrl).trim();
     if (file) {
       const base =
-        process.env.BASE_URL || `http://localhost:${process.env.PORT || 5000}`;
+        process.env.BASE_URL || `https://https://oneartpix.khankishiyevravan.info/`;
       imageUrl = `${base}/uploads/${encodeURIComponent(
         path.basename(file.path)
       )}`;
