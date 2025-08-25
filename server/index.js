@@ -8,6 +8,7 @@ const { notFound, errorHandler } = require("./middleware/error");
 const authRoutes = require("./routes/authRoutes");
 const roleRoutes = require("./routes/roleRoutes");
 const productRoutes = require("./routes/productRoutes");
+const sliderRoutes = require("./routes/sliderRoutes");
 
 // .env faylını _bu_ qovluqdan oxu
 dotenv.config({ path: path.join(__dirname, ".env") });
@@ -46,6 +47,7 @@ app.use("/api/roles", roleRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/contacts", require("./routes/contactRoutes"));
+app.use("/api/sliders", sliderRoutes);
 /* ---------------- Errors ---------------- */
 // 404 və ümumi errorlar routelardan sonra gəlir
 app.use(notFound);
